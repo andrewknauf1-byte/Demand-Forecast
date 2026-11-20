@@ -1,0 +1,110 @@
+column,source,sellerise_header,dtype,missing_day_rule,description
+asin,key,,object,never missing,catalog ASIN
+date,key,,datetime64[ns],never missing,calendar day
+seller_sku,product catalog,,string,never missing,catalog attribute: seller_sku
+scent,product catalog,,string,never missing,catalog attribute: scent
+category,product catalog,,string,never missing,catalog attribute: category
+size_name,product catalog,,string,never missing,catalog attribute: size_name
+sellerise_row_present,flag (built here),,bool,never missing,"True = Sellerise exported a row for this key and day; False = no row, every sales/ads metric filled with 0"
+inventory_observed,flag (built here),,bool,never missing,"True = Stock By Day had this ASIN on this day; False = not in the export, inventory columns filled with 0 (NOT a confirmed stockout)"
+sessions_available,flag (built here),,bool,never missing,True from 2024-06-26 except provisional days; before that Sellerise has no sessions/page views and reports 0
+attribution_available,flag (built here),,bool,never missing,True from 2025-03-14; before that Sellerise has ad cost but no ad-attributed units/orders/sales and reports 0
+provisional,flag (built here),,bool,never missing,"True = newest 2 days of the export: sessions not posted yet, ad attribution still filling in"
+sales,Sellerise sales + ads export (ASIN view),Sales,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Sales'
+product_sales,Sellerise sales + ads export (ASIN view),Product sales,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Product sales'
+net_profit,Sellerise sales + ads export (ASIN view),Net profit,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Net profit'
+margin,Sellerise sales + ads export (ASIN view),Margin,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Margin'
+roi,Sellerise sales + ads export (ASIN view),ROI,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'ROI'
+taxes,Sellerise sales + ads export (ASIN view),Taxes,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Taxes'
+fba_fees,Sellerise sales + ads export (ASIN view),FBA fees,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'FBA fees'
+referral_fees,Sellerise sales + ads export (ASIN view),Referral fees,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Referral fees'
+promo_fees,Sellerise sales + ads export (ASIN view),Promo fees,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Promo fees'
+cog,Sellerise sales + ads export (ASIN view),CoG,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'CoG'
+manual_expenses,Sellerise sales + ads export (ASIN view),Manual expenses,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Manual expenses'
+manual_incomes,Sellerise sales + ads export (ASIN view),Manual incomes,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Manual incomes'
+refunds_usd,Sellerise sales + ads export (ASIN view),Refunds $,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Refunds $'
+refunds_qty,Sellerise sales + ads export (ASIN view),Refunds qty,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Refunds qty'
+refund_rate_pct,Sellerise sales + ads export (ASIN view),Refund rate %,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Refund rate %'
+other_amz_transactions,Sellerise sales + ads export (ASIN view),Other AMZ transactions,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Other AMZ transactions'
+ad_cost,Sellerise sales + ads export (ASIN view),Ad. cost,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Ad. cost'
+ad_cost_sp_products,Sellerise sales + ads export (ASIN view),<- Sp. Products,float64,0 when no row for the day; see sellerise_row_present,Sponsored Products part of ad_cost_sp_products as exported by Sellerise
+ad_cost_sp_display,Sellerise sales + ads export (ASIN view),<- Sp. Display,float64,0 when no row for the day; see sellerise_row_present,Sponsored Display part of ad_cost_sp_display as exported by Sellerise
+ad_cost_sp_brands,Sellerise sales + ads export (ASIN view),<- Sp. Brands,float64,0 when no row for the day; see sellerise_row_present,Sponsored Brands part of ad_cost_sp_brands as exported by Sellerise
+ad_cost_sp_video,Sellerise sales + ads export (ASIN view),<- Sp. Video,float64,0 when no row for the day; see sellerise_row_present,Sponsored Video part of ad_cost_sp_video as exported by Sellerise
+ad_orders,Sellerise sales + ads export (ASIN view),Ad. orders,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Ad. orders'
+ad_orders_sp_products,Sellerise sales + ads export (ASIN view),<- Sp. Products,int64,0 when no row for the day; see sellerise_row_present,Sponsored Products part of ad_orders_sp_products as exported by Sellerise
+ad_orders_sp_display,Sellerise sales + ads export (ASIN view),<- Sp. Display,int64,0 when no row for the day; see sellerise_row_present,Sponsored Display part of ad_orders_sp_display as exported by Sellerise
+ad_orders_sp_brands,Sellerise sales + ads export (ASIN view),<- Sp. Brands,int64,0 when no row for the day; see sellerise_row_present,Sponsored Brands part of ad_orders_sp_brands as exported by Sellerise
+ad_orders_sp_video,Sellerise sales + ads export (ASIN view),<- Sp. Video,int64,0 when no row for the day; see sellerise_row_present,Sponsored Video part of ad_orders_sp_video as exported by Sellerise
+ad_units,Sellerise sales + ads export (ASIN view),Ad. units,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Ad. units'
+ad_units_sp_products,Sellerise sales + ads export (ASIN view),<- Sp. Products,int64,0 when no row for the day; see sellerise_row_present,Sponsored Products part of ad_units_sp_products as exported by Sellerise
+ad_units_sp_display,Sellerise sales + ads export (ASIN view),<- Sp. Display,int64,0 when no row for the day; see sellerise_row_present,Sponsored Display part of ad_units_sp_display as exported by Sellerise
+ad_units_sp_brands,Sellerise sales + ads export (ASIN view),<- Sp. Brands,int64,0 when no row for the day; see sellerise_row_present,Sponsored Brands part of ad_units_sp_brands as exported by Sellerise
+ad_units_sp_video,Sellerise sales + ads export (ASIN view),<- Sp. Video,int64,0 when no row for the day; see sellerise_row_present,Sponsored Video part of ad_units_sp_video as exported by Sellerise
+ad_units_pct,Sellerise sales + ads export (ASIN view),Ad. units %,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Ad. units %'
+ad_clicks,Sellerise sales + ads export (ASIN view),Ad. clicks,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Ad. clicks'
+ad_clicks_sp_products,Sellerise sales + ads export (ASIN view),<- Sp. Products,int64,0 when no row for the day; see sellerise_row_present,Sponsored Products part of ad_clicks_sp_products as exported by Sellerise
+ad_clicks_sp_display,Sellerise sales + ads export (ASIN view),<- Sp. Display,int64,0 when no row for the day; see sellerise_row_present,Sponsored Display part of ad_clicks_sp_display as exported by Sellerise
+ad_clicks_sp_brands,Sellerise sales + ads export (ASIN view),<- Sp. Brands,int64,0 when no row for the day; see sellerise_row_present,Sponsored Brands part of ad_clicks_sp_brands as exported by Sellerise
+ad_clicks_sp_video,Sellerise sales + ads export (ASIN view),<- Sp. Video,int64,0 when no row for the day; see sellerise_row_present,Sponsored Video part of ad_clicks_sp_video as exported by Sellerise
+org_orders,Sellerise sales + ads export (ASIN view),Org. orders,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Org. orders'
+org_units,Sellerise sales + ads export (ASIN view),Org. units,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Org. units'
+org_units_pct,Sellerise sales + ads export (ASIN view),Org. units %,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Org. units %'
+orders,Sellerise sales + ads export (ASIN view),Orders,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Orders'
+units,Sellerise sales + ads export (ASIN view),Units,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Units'
+mcf_orders,Sellerise sales + ads export (ASIN view),MCF orders,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'MCF orders'
+mcf_units,Sellerise sales + ads export (ASIN view),MCF units,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'MCF units'
+removal_orders,Sellerise sales + ads export (ASIN view),Removal orders,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Removal orders'
+removal_units,Sellerise sales + ads export (ASIN view),Removal units,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Removal units'
+coupons,Sellerise sales + ads export (ASIN view),Coupons,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Coupons'
+promo,Sellerise sales + ads export (ASIN view),Promo,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Promo'
+sns,Sellerise sales + ads export (ASIN view),SNS,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'SNS'
+sessions,Sellerise sales + ads export (ASIN view),Sessions,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Sessions'
+page_views,Sellerise sales + ads export (ASIN view),Page views,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Page views'
+sessions_mobile,Sellerise sales + ads export (ASIN view),Sessions mobile,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Sessions mobile'
+page_views_mobile,Sellerise sales + ads export (ASIN view),Page views mobile,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Page views mobile'
+conversion,Sellerise sales + ads export (ASIN view),Conversion,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Conversion'
+true_conversion,Sellerise sales + ads export (ASIN view),True conversion,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'True conversion'
+ppc_conversion,Sellerise sales + ads export (ASIN view),PPC conversion,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'PPC conversion'
+ppc_conversion_sp_products,Sellerise sales + ads export (ASIN view),<- Sp. Products,float64,0 when no row for the day; see sellerise_row_present,Sponsored Products part of ppc_conversion_sp_products as exported by Sellerise
+ppc_conversion_sp_display,Sellerise sales + ads export (ASIN view),<- Sp. Display,float64,0 when no row for the day; see sellerise_row_present,Sponsored Display part of ppc_conversion_sp_display as exported by Sellerise
+ppc_conversion_sp_brands,Sellerise sales + ads export (ASIN view),<- Sp. Brands,float64,0 when no row for the day; see sellerise_row_present,Sponsored Brands part of ppc_conversion_sp_brands as exported by Sellerise
+ppc_conversion_sp_video,Sellerise sales + ads export (ASIN view),<- Sp. Video,float64,0 when no row for the day; see sellerise_row_present,Sponsored Video part of ppc_conversion_sp_video as exported by Sellerise
+unit_session_pct,Sellerise sales + ads export (ASIN view),Unit session %,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Unit session %'
+tacos,Sellerise sales + ads export (ASIN view),TACoS,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'TACoS'
+acos,Sellerise sales + ads export (ASIN view),ACoS,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'ACoS'
+acos_sp_products,Sellerise sales + ads export (ASIN view),<- Sp. Products,float64,0 when no row for the day; see sellerise_row_present,Sponsored Products part of acos_sp_products as exported by Sellerise
+acos_sp_display,Sellerise sales + ads export (ASIN view),<- Sp. Display,float64,0 when no row for the day; see sellerise_row_present,Sponsored Display part of acos_sp_display as exported by Sellerise
+acos_sp_brands,Sellerise sales + ads export (ASIN view),<- Sp. Brands,float64,0 when no row for the day; see sellerise_row_present,Sponsored Brands part of acos_sp_brands as exported by Sellerise
+acos_sp_video,Sellerise sales + ads export (ASIN view),<- Sp. Video,float64,0 when no row for the day; see sellerise_row_present,Sponsored Video part of acos_sp_video as exported by Sellerise
+ad_sales,Sellerise sales + ads export (ASIN view),Ad sales,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Ad sales'
+ad_sales_sp_products,Sellerise sales + ads export (ASIN view),<- Sp. Products,float64,0 when no row for the day; see sellerise_row_present,Sponsored Products part of ad_sales_sp_products as exported by Sellerise
+ad_sales_sp_display,Sellerise sales + ads export (ASIN view),<- Sp. Display,float64,0 when no row for the day; see sellerise_row_present,Sponsored Display part of ad_sales_sp_display as exported by Sellerise
+ad_sales_sp_brands,Sellerise sales + ads export (ASIN view),<- Sp. Brands,float64,0 when no row for the day; see sellerise_row_present,Sponsored Brands part of ad_sales_sp_brands as exported by Sellerise
+ad_sales_sp_video,Sellerise sales + ads export (ASIN view),<- Sp. Video,float64,0 when no row for the day; see sellerise_row_present,Sponsored Video part of ad_sales_sp_video as exported by Sellerise
+impressions,Sellerise sales + ads export (ASIN view),Impressions,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Impressions'
+impressions_sp_products,Sellerise sales + ads export (ASIN view),<- Sp. Products,int64,0 when no row for the day; see sellerise_row_present,Sponsored Products part of impressions_sp_products as exported by Sellerise
+impressions_sp_display,Sellerise sales + ads export (ASIN view),<- Sp. Display,int64,0 when no row for the day; see sellerise_row_present,Sponsored Display part of impressions_sp_display as exported by Sellerise
+impressions_sp_brands,Sellerise sales + ads export (ASIN view),<- Sp. Brands,int64,0 when no row for the day; see sellerise_row_present,Sponsored Brands part of impressions_sp_brands as exported by Sellerise
+impressions_sp_video,Sellerise sales + ads export (ASIN view),<- Sp. Video,int64,0 when no row for the day; see sellerise_row_present,Sponsored Video part of impressions_sp_video as exported by Sellerise
+ctr,Sellerise sales + ads export (ASIN view),CTR,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'CTR'
+ctr_sp_products,Sellerise sales + ads export (ASIN view),<- Sp. Products,float64,0 when no row for the day; see sellerise_row_present,Sponsored Products part of ctr_sp_products as exported by Sellerise
+ctr_sp_display,Sellerise sales + ads export (ASIN view),<- Sp. Display,float64,0 when no row for the day; see sellerise_row_present,Sponsored Display part of ctr_sp_display as exported by Sellerise
+ctr_sp_brands,Sellerise sales + ads export (ASIN view),<- Sp. Brands,float64,0 when no row for the day; see sellerise_row_present,Sponsored Brands part of ctr_sp_brands as exported by Sellerise
+ctr_sp_video,Sellerise sales + ads export (ASIN view),<- Sp. Video,float64,0 when no row for the day; see sellerise_row_present,Sponsored Video part of ctr_sp_video as exported by Sellerise
+sales_per_unit,Sellerise sales + ads export (ASIN view),Sales / Unit,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Sales / Unit'
+net_profit_per_unit,Sellerise sales + ads export (ASIN view),Net profit / Unit,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Net profit / Unit'
+refund_per_unit,Sellerise sales + ads export (ASIN view),Refund / Unit,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Refund / Unit'
+ad_cost_per_unit,Sellerise sales + ads export (ASIN view),Ad. Cost / Unit,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Ad. Cost / Unit'
+ad_sales_per_unit,Sellerise sales + ads export (ASIN view),Ad. Sales / Unit,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Ad. Sales / Unit'
+prod_sales_per_order,Sellerise sales + ads export (ASIN view),Prod. sales / Order,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Prod. sales / Order'
+prod_sales_per_unit,Sellerise sales + ads export (ASIN view),Prod. sales / Unit,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Prod. sales / Unit'
+storage_fees,Sellerise sales + ads export (ASIN view),Storage fees,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Storage fees'
+available,Sellerise Stock By Day,available,int64,0 when not in the export; see inventory_observed,FBA units available to sell (Sellerise Stock By Day)
+total_stock,Sellerise Stock By Day,total_stock,int64,0 when not in the export; see inventory_observed,FBA total stock
+reserved,Sellerise Stock By Day,reserved,int64,0 when not in the export; see inventory_observed,FBA reserved units
+inbound_shipped,Sellerise Stock By Day,inbound_shipped,int64,0 when not in the export; see inventory_observed,inbound: shipped
+inbound,Sellerise Stock By Day,inbound,int64,0 when not in the export; see inventory_observed,inbound total
+inbound_receiving,Sellerise Stock By Day,inbound_receiving,int64,0 when not in the export; see inventory_observed,inbound: receiving
+future_supply,Sellerise Stock By Day,future_supply,int64,0 when not in the export; see inventory_observed,future supply
+unfulfillable,Sellerise Stock By Day,unfulfillable,int64,0 when not in the export; see inventory_observed,unfulfillable units
