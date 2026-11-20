@@ -1,110 +1,139 @@
-column,source,sellerise_header,dtype,missing_day_rule,description
-asin,key,,object,never missing,catalog ASIN
-date,key,,datetime64[ns],never missing,calendar day
-seller_sku,product catalog,,string,never missing,catalog attribute: seller_sku
-scent,product catalog,,string,never missing,catalog attribute: scent
-category,product catalog,,string,never missing,catalog attribute: category
-size_name,product catalog,,string,never missing,catalog attribute: size_name
-sellerise_row_present,flag (built here),,bool,never missing,"True = Sellerise exported a row for this key and day; False = no row, every sales/ads metric filled with 0"
-inventory_observed,flag (built here),,bool,never missing,"True = Stock By Day had this ASIN on this day; False = not in the export, inventory columns filled with 0 (NOT a confirmed stockout)"
-sessions_available,flag (built here),,bool,never missing,True from 2024-06-26 except provisional days; before that Sellerise has no sessions/page views and reports 0
-attribution_available,flag (built here),,bool,never missing,True from 2025-03-14; before that Sellerise has ad cost but no ad-attributed units/orders/sales and reports 0
-provisional,flag (built here),,bool,never missing,"True = newest 2 days of the export: sessions not posted yet, ad attribution still filling in"
-sales,Sellerise sales + ads export (ASIN view),Sales,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Sales'
-product_sales,Sellerise sales + ads export (ASIN view),Product sales,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Product sales'
-net_profit,Sellerise sales + ads export (ASIN view),Net profit,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Net profit'
-margin,Sellerise sales + ads export (ASIN view),Margin,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Margin'
-roi,Sellerise sales + ads export (ASIN view),ROI,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'ROI'
-taxes,Sellerise sales + ads export (ASIN view),Taxes,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Taxes'
-fba_fees,Sellerise sales + ads export (ASIN view),FBA fees,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'FBA fees'
-referral_fees,Sellerise sales + ads export (ASIN view),Referral fees,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Referral fees'
-promo_fees,Sellerise sales + ads export (ASIN view),Promo fees,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Promo fees'
-cog,Sellerise sales + ads export (ASIN view),CoG,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'CoG'
-manual_expenses,Sellerise sales + ads export (ASIN view),Manual expenses,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Manual expenses'
-manual_incomes,Sellerise sales + ads export (ASIN view),Manual incomes,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Manual incomes'
-refunds_usd,Sellerise sales + ads export (ASIN view),Refunds $,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Refunds $'
-refunds_qty,Sellerise sales + ads export (ASIN view),Refunds qty,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Refunds qty'
-refund_rate_pct,Sellerise sales + ads export (ASIN view),Refund rate %,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Refund rate %'
-other_amz_transactions,Sellerise sales + ads export (ASIN view),Other AMZ transactions,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Other AMZ transactions'
-ad_cost,Sellerise sales + ads export (ASIN view),Ad. cost,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Ad. cost'
-ad_cost_sp_products,Sellerise sales + ads export (ASIN view),<- Sp. Products,float64,0 when no row for the day; see sellerise_row_present,Sponsored Products part of ad_cost_sp_products as exported by Sellerise
-ad_cost_sp_display,Sellerise sales + ads export (ASIN view),<- Sp. Display,float64,0 when no row for the day; see sellerise_row_present,Sponsored Display part of ad_cost_sp_display as exported by Sellerise
-ad_cost_sp_brands,Sellerise sales + ads export (ASIN view),<- Sp. Brands,float64,0 when no row for the day; see sellerise_row_present,Sponsored Brands part of ad_cost_sp_brands as exported by Sellerise
-ad_cost_sp_video,Sellerise sales + ads export (ASIN view),<- Sp. Video,float64,0 when no row for the day; see sellerise_row_present,Sponsored Video part of ad_cost_sp_video as exported by Sellerise
-ad_orders,Sellerise sales + ads export (ASIN view),Ad. orders,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Ad. orders'
-ad_orders_sp_products,Sellerise sales + ads export (ASIN view),<- Sp. Products,int64,0 when no row for the day; see sellerise_row_present,Sponsored Products part of ad_orders_sp_products as exported by Sellerise
-ad_orders_sp_display,Sellerise sales + ads export (ASIN view),<- Sp. Display,int64,0 when no row for the day; see sellerise_row_present,Sponsored Display part of ad_orders_sp_display as exported by Sellerise
-ad_orders_sp_brands,Sellerise sales + ads export (ASIN view),<- Sp. Brands,int64,0 when no row for the day; see sellerise_row_present,Sponsored Brands part of ad_orders_sp_brands as exported by Sellerise
-ad_orders_sp_video,Sellerise sales + ads export (ASIN view),<- Sp. Video,int64,0 when no row for the day; see sellerise_row_present,Sponsored Video part of ad_orders_sp_video as exported by Sellerise
-ad_units,Sellerise sales + ads export (ASIN view),Ad. units,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Ad. units'
-ad_units_sp_products,Sellerise sales + ads export (ASIN view),<- Sp. Products,int64,0 when no row for the day; see sellerise_row_present,Sponsored Products part of ad_units_sp_products as exported by Sellerise
-ad_units_sp_display,Sellerise sales + ads export (ASIN view),<- Sp. Display,int64,0 when no row for the day; see sellerise_row_present,Sponsored Display part of ad_units_sp_display as exported by Sellerise
-ad_units_sp_brands,Sellerise sales + ads export (ASIN view),<- Sp. Brands,int64,0 when no row for the day; see sellerise_row_present,Sponsored Brands part of ad_units_sp_brands as exported by Sellerise
-ad_units_sp_video,Sellerise sales + ads export (ASIN view),<- Sp. Video,int64,0 when no row for the day; see sellerise_row_present,Sponsored Video part of ad_units_sp_video as exported by Sellerise
-ad_units_pct,Sellerise sales + ads export (ASIN view),Ad. units %,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Ad. units %'
-ad_clicks,Sellerise sales + ads export (ASIN view),Ad. clicks,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Ad. clicks'
-ad_clicks_sp_products,Sellerise sales + ads export (ASIN view),<- Sp. Products,int64,0 when no row for the day; see sellerise_row_present,Sponsored Products part of ad_clicks_sp_products as exported by Sellerise
-ad_clicks_sp_display,Sellerise sales + ads export (ASIN view),<- Sp. Display,int64,0 when no row for the day; see sellerise_row_present,Sponsored Display part of ad_clicks_sp_display as exported by Sellerise
-ad_clicks_sp_brands,Sellerise sales + ads export (ASIN view),<- Sp. Brands,int64,0 when no row for the day; see sellerise_row_present,Sponsored Brands part of ad_clicks_sp_brands as exported by Sellerise
-ad_clicks_sp_video,Sellerise sales + ads export (ASIN view),<- Sp. Video,int64,0 when no row for the day; see sellerise_row_present,Sponsored Video part of ad_clicks_sp_video as exported by Sellerise
-org_orders,Sellerise sales + ads export (ASIN view),Org. orders,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Org. orders'
-org_units,Sellerise sales + ads export (ASIN view),Org. units,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Org. units'
-org_units_pct,Sellerise sales + ads export (ASIN view),Org. units %,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Org. units %'
-orders,Sellerise sales + ads export (ASIN view),Orders,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Orders'
-units,Sellerise sales + ads export (ASIN view),Units,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Units'
-mcf_orders,Sellerise sales + ads export (ASIN view),MCF orders,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'MCF orders'
-mcf_units,Sellerise sales + ads export (ASIN view),MCF units,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'MCF units'
-removal_orders,Sellerise sales + ads export (ASIN view),Removal orders,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Removal orders'
-removal_units,Sellerise sales + ads export (ASIN view),Removal units,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Removal units'
-coupons,Sellerise sales + ads export (ASIN view),Coupons,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Coupons'
-promo,Sellerise sales + ads export (ASIN view),Promo,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Promo'
-sns,Sellerise sales + ads export (ASIN view),SNS,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'SNS'
-sessions,Sellerise sales + ads export (ASIN view),Sessions,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Sessions'
-page_views,Sellerise sales + ads export (ASIN view),Page views,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Page views'
-sessions_mobile,Sellerise sales + ads export (ASIN view),Sessions mobile,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Sessions mobile'
-page_views_mobile,Sellerise sales + ads export (ASIN view),Page views mobile,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Page views mobile'
-conversion,Sellerise sales + ads export (ASIN view),Conversion,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Conversion'
-true_conversion,Sellerise sales + ads export (ASIN view),True conversion,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'True conversion'
-ppc_conversion,Sellerise sales + ads export (ASIN view),PPC conversion,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'PPC conversion'
-ppc_conversion_sp_products,Sellerise sales + ads export (ASIN view),<- Sp. Products,float64,0 when no row for the day; see sellerise_row_present,Sponsored Products part of ppc_conversion_sp_products as exported by Sellerise
-ppc_conversion_sp_display,Sellerise sales + ads export (ASIN view),<- Sp. Display,float64,0 when no row for the day; see sellerise_row_present,Sponsored Display part of ppc_conversion_sp_display as exported by Sellerise
-ppc_conversion_sp_brands,Sellerise sales + ads export (ASIN view),<- Sp. Brands,float64,0 when no row for the day; see sellerise_row_present,Sponsored Brands part of ppc_conversion_sp_brands as exported by Sellerise
-ppc_conversion_sp_video,Sellerise sales + ads export (ASIN view),<- Sp. Video,float64,0 when no row for the day; see sellerise_row_present,Sponsored Video part of ppc_conversion_sp_video as exported by Sellerise
-unit_session_pct,Sellerise sales + ads export (ASIN view),Unit session %,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Unit session %'
-tacos,Sellerise sales + ads export (ASIN view),TACoS,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'TACoS'
-acos,Sellerise sales + ads export (ASIN view),ACoS,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'ACoS'
-acos_sp_products,Sellerise sales + ads export (ASIN view),<- Sp. Products,float64,0 when no row for the day; see sellerise_row_present,Sponsored Products part of acos_sp_products as exported by Sellerise
-acos_sp_display,Sellerise sales + ads export (ASIN view),<- Sp. Display,float64,0 when no row for the day; see sellerise_row_present,Sponsored Display part of acos_sp_display as exported by Sellerise
-acos_sp_brands,Sellerise sales + ads export (ASIN view),<- Sp. Brands,float64,0 when no row for the day; see sellerise_row_present,Sponsored Brands part of acos_sp_brands as exported by Sellerise
-acos_sp_video,Sellerise sales + ads export (ASIN view),<- Sp. Video,float64,0 when no row for the day; see sellerise_row_present,Sponsored Video part of acos_sp_video as exported by Sellerise
-ad_sales,Sellerise sales + ads export (ASIN view),Ad sales,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Ad sales'
-ad_sales_sp_products,Sellerise sales + ads export (ASIN view),<- Sp. Products,float64,0 when no row for the day; see sellerise_row_present,Sponsored Products part of ad_sales_sp_products as exported by Sellerise
-ad_sales_sp_display,Sellerise sales + ads export (ASIN view),<- Sp. Display,float64,0 when no row for the day; see sellerise_row_present,Sponsored Display part of ad_sales_sp_display as exported by Sellerise
-ad_sales_sp_brands,Sellerise sales + ads export (ASIN view),<- Sp. Brands,float64,0 when no row for the day; see sellerise_row_present,Sponsored Brands part of ad_sales_sp_brands as exported by Sellerise
-ad_sales_sp_video,Sellerise sales + ads export (ASIN view),<- Sp. Video,float64,0 when no row for the day; see sellerise_row_present,Sponsored Video part of ad_sales_sp_video as exported by Sellerise
-impressions,Sellerise sales + ads export (ASIN view),Impressions,int64,0 when no row for the day; see sellerise_row_present,Sellerise 'Impressions'
-impressions_sp_products,Sellerise sales + ads export (ASIN view),<- Sp. Products,int64,0 when no row for the day; see sellerise_row_present,Sponsored Products part of impressions_sp_products as exported by Sellerise
-impressions_sp_display,Sellerise sales + ads export (ASIN view),<- Sp. Display,int64,0 when no row for the day; see sellerise_row_present,Sponsored Display part of impressions_sp_display as exported by Sellerise
-impressions_sp_brands,Sellerise sales + ads export (ASIN view),<- Sp. Brands,int64,0 when no row for the day; see sellerise_row_present,Sponsored Brands part of impressions_sp_brands as exported by Sellerise
-impressions_sp_video,Sellerise sales + ads export (ASIN view),<- Sp. Video,int64,0 when no row for the day; see sellerise_row_present,Sponsored Video part of impressions_sp_video as exported by Sellerise
-ctr,Sellerise sales + ads export (ASIN view),CTR,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'CTR'
-ctr_sp_products,Sellerise sales + ads export (ASIN view),<- Sp. Products,float64,0 when no row for the day; see sellerise_row_present,Sponsored Products part of ctr_sp_products as exported by Sellerise
-ctr_sp_display,Sellerise sales + ads export (ASIN view),<- Sp. Display,float64,0 when no row for the day; see sellerise_row_present,Sponsored Display part of ctr_sp_display as exported by Sellerise
-ctr_sp_brands,Sellerise sales + ads export (ASIN view),<- Sp. Brands,float64,0 when no row for the day; see sellerise_row_present,Sponsored Brands part of ctr_sp_brands as exported by Sellerise
-ctr_sp_video,Sellerise sales + ads export (ASIN view),<- Sp. Video,float64,0 when no row for the day; see sellerise_row_present,Sponsored Video part of ctr_sp_video as exported by Sellerise
-sales_per_unit,Sellerise sales + ads export (ASIN view),Sales / Unit,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Sales / Unit'
-net_profit_per_unit,Sellerise sales + ads export (ASIN view),Net profit / Unit,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Net profit / Unit'
-refund_per_unit,Sellerise sales + ads export (ASIN view),Refund / Unit,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Refund / Unit'
-ad_cost_per_unit,Sellerise sales + ads export (ASIN view),Ad. Cost / Unit,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Ad. Cost / Unit'
-ad_sales_per_unit,Sellerise sales + ads export (ASIN view),Ad. Sales / Unit,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Ad. Sales / Unit'
-prod_sales_per_order,Sellerise sales + ads export (ASIN view),Prod. sales / Order,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Prod. sales / Order'
-prod_sales_per_unit,Sellerise sales + ads export (ASIN view),Prod. sales / Unit,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Prod. sales / Unit'
-storage_fees,Sellerise sales + ads export (ASIN view),Storage fees,float64,0 when no row for the day; see sellerise_row_present,Sellerise 'Storage fees'
-available,Sellerise Stock By Day,available,int64,0 when not in the export; see inventory_observed,FBA units available to sell (Sellerise Stock By Day)
-total_stock,Sellerise Stock By Day,total_stock,int64,0 when not in the export; see inventory_observed,FBA total stock
-reserved,Sellerise Stock By Day,reserved,int64,0 when not in the export; see inventory_observed,FBA reserved units
-inbound_shipped,Sellerise Stock By Day,inbound_shipped,int64,0 when not in the export; see inventory_observed,inbound: shipped
-inbound,Sellerise Stock By Day,inbound,int64,0 when not in the export; see inventory_observed,inbound total
-inbound_receiving,Sellerise Stock By Day,inbound_receiving,int64,0 when not in the export; see inventory_observed,inbound: receiving
-future_supply,Sellerise Stock By Day,future_supply,int64,0 when not in the export; see inventory_observed,future supply
-unfulfillable,Sellerise Stock By Day,unfulfillable,int64,0 when not in the export; see inventory_observed,unfulfillable units
+column,source,sellerise_header,dtype,blank_rule,description
+asin,key,,object,never blank,catalog ASIN
+date,key,,datetime64[ns],never blank,calendar day
+seller_sku,product catalog (dim_product),,string,never blank,catalog attribute: seller_sku
+scent,product catalog (dim_product),,string,never blank,catalog attribute: scent
+category,product catalog (dim_product),,string,never blank,catalog attribute: category
+size_name,product catalog (dim_product),,string,never blank,catalog attribute: size_name
+month,forecasting table daily_facts (src/asin_daily/facts.py),,object,never blank; 0 on a day without a Sellerise row,YYYY-MM
+year,forecasting table daily_facts (src/asin_daily/facts.py),,int32,never blank; 0 on a day without a Sellerise row,calendar year
+dow,forecasting table daily_facts (src/asin_daily/facts.py),,int32,never blank; 0 on a day without a Sellerise row,day of week 0=Monday
+day_of_month,forecasting table daily_facts (src/asin_daily/facts.py),,int32,never blank; 0 on a day without a Sellerise row,1..31
+days_in_month,forecasting table daily_facts (src/asin_daily/facts.py),,int32,never blank; 0 on a day without a Sellerise row,28..31
+units,forecasting table daily_facts (src/asin_daily/facts.py),Units,float64,never blank; 0 on a day without a Sellerise row,"units sold (Sellerise daily, reconciles to the BR monthly authority)"
+orders,forecasting table daily_facts (src/asin_daily/facts.py),Orders,float64,never blank; 0 on a day without a Sellerise row,orders
+units_fba,forecasting table daily_facts (src/asin_daily/facts.py),,float64,never blank; 0 on a day without a Sellerise row,units on FBA SKUs (SKU view)
+units_fbm,forecasting table daily_facts (src/asin_daily/facts.py),,float64,never blank; 0 on a day without a Sellerise row,units on FBM-likely SKUs (SKU view)
+org_units,forecasting table daily_facts (src/asin_daily/facts.py),Org. units,float64,never blank; 0 on a day without a Sellerise row,organic units as reported = units - ad units of all types
+organic_units_sp,forecasting table daily_facts (src/asin_daily/facts.py),,float64,never blank; 0 on a day without a Sellerise row,"units - SP ad units (charter basis), floored at 0"
+ad_units,forecasting table daily_facts (src/asin_daily/facts.py),Ad. units,float64,never blank; 0 on a day without a Sellerise row,"ad-attributed units, all types"
+ad_units_sp,forecasting table daily_facts (src/asin_daily/facts.py),<- Sp. Products,float64,never blank; 0 on a day without a Sellerise row,Sponsored Products ad units (the charter series)
+ad_units_sd,forecasting table daily_facts (src/asin_daily/facts.py),<- Sp. Display,float64,never blank; 0 on a day without a Sellerise row,Sponsored Display
+ad_units_sb,forecasting table daily_facts (src/asin_daily/facts.py),<- Sp. Brands,float64,never blank; 0 on a day without a Sellerise row,Sponsored Brands
+ad_units_sv,forecasting table daily_facts (src/asin_daily/facts.py),<- Sp. Video,float64,never blank; 0 on a day without a Sellerise row,Sponsored Video
+spend,forecasting table daily_facts (src/asin_daily/facts.py),Ad. cost,float64,never blank; 0 on a day without a Sellerise row,"ad spend, all types $"
+spend_sp,forecasting table daily_facts (src/asin_daily/facts.py),<- Sp. Products,float64,never blank; 0 on a day without a Sellerise row,SP spend $
+spend_sd,forecasting table daily_facts (src/asin_daily/facts.py),<- Sp. Display,float64,never blank; 0 on a day without a Sellerise row,SD spend $
+spend_sb,forecasting table daily_facts (src/asin_daily/facts.py),<- Sp. Brands,float64,never blank; 0 on a day without a Sellerise row,SB spend $
+spend_sv,forecasting table daily_facts (src/asin_daily/facts.py),<- Sp. Video,float64,never blank; 0 on a day without a Sellerise row,SV spend $
+ad_clicks,forecasting table daily_facts (src/asin_daily/facts.py),Ad. clicks,float64,never blank; 0 on a day without a Sellerise row,"ad clicks, all types"
+ad_clicks_sp,forecasting table daily_facts (src/asin_daily/facts.py),<- Sp. Products,float64,never blank; 0 on a day without a Sellerise row,SP clicks
+impressions_sp,forecasting table daily_facts (src/asin_daily/facts.py),<- Sp. Products,float64,never blank; 0 on a day without a Sellerise row,SP impressions
+ad_sales,forecasting table daily_facts (src/asin_daily/facts.py),Ad sales,float64,never blank; 0 on a day without a Sellerise row,"ad sales $, all types"
+ad_sales_sp,forecasting table daily_facts (src/asin_daily/facts.py),<- Sp. Products,float64,never blank; 0 on a day without a Sellerise row,SP ad sales $
+ad_orders_sp,forecasting table daily_facts (src/asin_daily/facts.py),<- Sp. Products,float64,never blank; 0 on a day without a Sellerise row,SP ad orders
+sessions,forecasting table daily_facts (src/asin_daily/facts.py),Sessions,float64,never blank; 0 on a day without a Sellerise row,sessions (from 2024-06-26)
+sessions_mobile,forecasting table daily_facts (src/asin_daily/facts.py),Sessions mobile,float64,never blank; 0 on a day without a Sellerise row,mobile sessions
+page_views,forecasting table daily_facts (src/asin_daily/facts.py),Page views,float64,never blank; 0 on a day without a Sellerise row,page views
+coupon_units,forecasting table daily_facts (src/asin_daily/facts.py),Coupons,float64,never blank; 0 on a day without a Sellerise row,units sold with a coupon
+promo_units,forecasting table daily_facts (src/asin_daily/facts.py),Promo,float64,never blank; 0 on a day without a Sellerise row,promotion units
+sns_units,forecasting table daily_facts (src/asin_daily/facts.py),SNS,float64,never blank; 0 on a day without a Sellerise row,subscribe-and-save units
+refunds_qty,forecasting table daily_facts (src/asin_daily/facts.py),Refunds qty,float64,never blank; 0 on a day without a Sellerise row,refunded units
+refunds_usd,forecasting table daily_facts (src/asin_daily/facts.py),Refunds $,float64,never blank; 0 on a day without a Sellerise row,refunds $
+mcf_units,forecasting table daily_facts (src/asin_daily/facts.py),MCF units,float64,never blank; 0 on a day without a Sellerise row,multi-channel fulfillment units
+removal_units,forecasting table daily_facts (src/asin_daily/facts.py),Removal units,float64,never blank; 0 on a day without a Sellerise row,removal units
+sales,forecasting table daily_facts (src/asin_daily/facts.py),Sales,float64,never blank; 0 on a day without a Sellerise row,sales $ (as reported)
+product_sales,forecasting table daily_facts (src/asin_daily/facts.py),Product sales,float64,never blank; 0 on a day without a Sellerise row,product sales $
+net_profit,forecasting table daily_facts (src/asin_daily/facts.py),Net profit,float64,never blank; 0 on a day without a Sellerise row,net profit $ (Sellerise)
+asp,forecasting table daily_facts (src/asin_daily/facts.py),,float64,blank when the denominator is 0 (ratio not defined that day),product_sales / units (NaN when no units)
+organic_sessions,forecasting table daily_facts (src/asin_daily/facts.py),,float64,never blank; 0 on a day without a Sellerise row,"sessions - ad clicks (all types), floored at 0"
+clicks_exceed_sessions,forecasting table daily_facts (src/asin_daily/facts.py),,bool,never blank; 0 on a day without a Sellerise row,flag: ad clicks > sessions on the day
+ad_units_exceed_units,forecasting table daily_facts (src/asin_daily/facts.py),,bool,never blank; 0 on a day without a Sellerise row,flag: SP ad units > units (attribution lag)
+conversion,forecasting table daily_facts (src/asin_daily/facts.py),,float64,blank when the denominator is 0 (ratio not defined that day),units / sessions
+organic_conversion,forecasting table daily_facts (src/asin_daily/facts.py),,float64,blank when the denominator is 0 (ratio not defined that day),organic_units_sp / organic_sessions
+ppc_conversion_sp,forecasting table daily_facts (src/asin_daily/facts.py),,float64,blank when the denominator is 0 (ratio not defined that day),SP ad units / SP clicks
+cpc_sp,forecasting table daily_facts (src/asin_daily/facts.py),,float64,blank when the denominator is 0 (ratio not defined that day),SP spend / SP clicks $
+efficiency_sp,forecasting table daily_facts (src/asin_daily/facts.py),,float64,blank when the denominator is 0 (ratio not defined that day),SP ad units per SP $
+tacos_sp,forecasting table daily_facts (src/asin_daily/facts.py),,float64,blank when the denominator is 0 (ratio not defined that day),SP spend / product sales
+acos_sp,forecasting table daily_facts (src/asin_daily/facts.py),,float64,blank when the denominator is 0 (ratio not defined that day),SP spend / SP ad sales
+inv_state,forecasting table daily_facts (src/asin_daily/facts.py),,object,never blank; 0 on a day without a Sellerise row,CLEAN / SOFT_RD / SOFT_IP / HARD / UNOBSERVED (sellerise_daily.day_states)
+available,forecasting table daily_facts (src/asin_daily/facts.py),,float64,blank when Stock By Day did not list the ASIN that day (inv_state = UNOBSERVED); not a confirmed stockout,FBA available units
+total_stock,forecasting table daily_facts (src/asin_daily/facts.py),,float64,blank when Stock By Day did not list the ASIN that day (inv_state = UNOBSERVED); not a confirmed stockout,FBA total stock
+reserved,forecasting table daily_facts (src/asin_daily/facts.py),,float64,blank when Stock By Day did not list the ASIN that day (inv_state = UNOBSERVED); not a confirmed stockout,reserved
+inbound,forecasting table daily_facts (src/asin_daily/facts.py),,float64,blank when Stock By Day did not list the ASIN that day (inv_state = UNOBSERVED); not a confirmed stockout,inbound total
+inbound_shipped,forecasting table daily_facts (src/asin_daily/facts.py),,float64,blank when Stock By Day did not list the ASIN that day (inv_state = UNOBSERVED); not a confirmed stockout,inbound shipped
+inbound_receiving,forecasting table daily_facts (src/asin_daily/facts.py),,float64,blank when Stock By Day did not list the ASIN that day (inv_state = UNOBSERVED); not a confirmed stockout,inbound receiving
+unfulfillable,forecasting table daily_facts (src/asin_daily/facts.py),,float64,blank when Stock By Day did not list the ASIN that day (inv_state = UNOBSERVED); not a confirmed stockout,unfulfillable
+spell_id,forecasting table daily_facts (src/asin_daily/facts.py),,float64,blank outside an out-of-stock spell,outage spell id per ASIN
+day_of_spell,forecasting table daily_facts (src/asin_daily/facts.py),,float64,blank outside an out-of-stock spell,day within the outage spell
+first_day_of_spell,forecasting table daily_facts (src/asin_daily/facts.py),,bool,never blank; 0 on a day without a Sellerise row,flag
+is_outage_day,forecasting table daily_facts (src/asin_daily/facts.py),,bool,never blank; 0 on a day without a Sellerise row,state in SOFT_RD / SOFT_IP / HARD
+expected_fba_B,forecasting table daily_facts (src/asin_daily/facts.py),,float64,blank when no expected-demand estimate exists for the day (set on out-of-stock days),true-demand expected FBA units on an outage day (EXP-017 method B)
+fbm_base,forecasting table daily_facts (src/asin_daily/facts.py),,float64,blank when no FBM baseline exists for the day (set on out-of-stock days),true-demand FBM baseline on an outage day
+units_adj,forecasting table daily_facts (src/asin_daily/facts.py),,float64,never blank; 0 on a day without a Sellerise row,"OOS-adjusted units: max(units, expected_fba_B + fbm_base) on outage days, else units"
+event,forecasting table daily_facts (src/asin_daily/facts.py),,object,never blank; 0 on a day without a Sellerise row,sale-event window name from config/event_calendar.csv ('' when none)
+is_event_day,forecasting table daily_facts (src/asin_daily/facts.py),,bool,never blank; 0 on a day without a Sellerise row,flag
+owner_event,forecasting table daily_facts (src/asin_daily/facts.py),,object,never blank; 0 on a day without a Sellerise row,owner-documented shock from config/events.csv covering the ASIN-month ('' when none)
+provisional,forecasting table daily_facts (src/asin_daily/facts.py),,bool,never blank; 0 on a day without a Sellerise row,"flag: within the newest 2 days of the export (sessions missing, attribution filling)"
+sessions_available,forecasting table daily_facts (src/asin_daily/facts.py),,bool,never blank; 0 on a day without a Sellerise row,flag: date >= 2024-06-26
+attribution_available,forecasting table daily_facts (src/asin_daily/facts.py),,bool,never blank; 0 on a day without a Sellerise row,flag: date >= 2025-03-14 (SP ad units exist)
+sellerise_row_present,flag (built here),,bool,never blank,"True = Sellerise exported a row for this key and day; False = no row, every sales / ads count is 0"
+inventory_observed,flag (built here),,bool,never blank,True = Stock By Day listed the ASIN that day (inv_state is not UNOBSERVED)
+margin,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Margin,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Margin' as exported
+roi,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,ROI,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'ROI' as exported
+taxes,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Taxes,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Taxes' as exported
+fba_fees,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,FBA fees,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'FBA fees' as exported
+referral_fees,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Referral fees,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Referral fees' as exported
+promo_fees,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Promo fees,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Promo fees' as exported
+cog,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,CoG,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'CoG' as exported
+manual_expenses,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Manual expenses,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Manual expenses' as exported
+manual_incomes,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Manual incomes,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Manual incomes' as exported
+refund_rate_pct,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Refund rate %,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Refund rate %' as exported
+other_amz_transactions,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Other AMZ transactions,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Other AMZ transactions' as exported
+ad_orders,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Ad. orders,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Ad. orders' as exported
+ad_orders_sp_display,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Display,float64,never blank; 0 on a day without a Sellerise row,Sponsored Display part of ad_orders_sp_display as exported by Sellerise
+ad_orders_sp_brands,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Brands,float64,never blank; 0 on a day without a Sellerise row,Sponsored Brands part of ad_orders_sp_brands as exported by Sellerise
+ad_orders_sp_video,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Video,float64,never blank; 0 on a day without a Sellerise row,Sponsored Video part of ad_orders_sp_video as exported by Sellerise
+ad_units_pct,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Ad. units %,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Ad. units %' as exported
+ad_clicks_sp_display,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Display,float64,never blank; 0 on a day without a Sellerise row,Sponsored Display part of ad_clicks_sp_display as exported by Sellerise
+ad_clicks_sp_brands,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Brands,float64,never blank; 0 on a day without a Sellerise row,Sponsored Brands part of ad_clicks_sp_brands as exported by Sellerise
+ad_clicks_sp_video,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Video,float64,never blank; 0 on a day without a Sellerise row,Sponsored Video part of ad_clicks_sp_video as exported by Sellerise
+org_orders,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Org. orders,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Org. orders' as exported
+org_units_pct,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Org. units %,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Org. units %' as exported
+mcf_orders,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,MCF orders,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'MCF orders' as exported
+removal_orders,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Removal orders,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Removal orders' as exported
+page_views_mobile,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Page views mobile,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Page views mobile' as exported
+conversion_sellerise,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Conversion,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Conversion' as exported
+true_conversion,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,True conversion,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'True conversion' as exported
+ppc_conversion,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,PPC conversion,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'PPC conversion' as exported
+ppc_conversion_sp_products,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Products,float64,never blank; 0 on a day without a Sellerise row,Sponsored Products part of ppc_conversion_sp_products as exported by Sellerise
+ppc_conversion_sp_display,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Display,float64,never blank; 0 on a day without a Sellerise row,Sponsored Display part of ppc_conversion_sp_display as exported by Sellerise
+ppc_conversion_sp_brands,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Brands,float64,never blank; 0 on a day without a Sellerise row,Sponsored Brands part of ppc_conversion_sp_brands as exported by Sellerise
+ppc_conversion_sp_video,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Video,float64,never blank; 0 on a day without a Sellerise row,Sponsored Video part of ppc_conversion_sp_video as exported by Sellerise
+unit_session_pct,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Unit session %,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Unit session %' as exported
+tacos,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,TACoS,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'TACoS' as exported
+acos,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,ACoS,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'ACoS' as exported
+acos_sp_products,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Products,float64,never blank; 0 on a day without a Sellerise row,Sponsored Products part of acos_sp_products as exported by Sellerise
+acos_sp_display,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Display,float64,never blank; 0 on a day without a Sellerise row,Sponsored Display part of acos_sp_display as exported by Sellerise
+acos_sp_brands,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Brands,float64,never blank; 0 on a day without a Sellerise row,Sponsored Brands part of acos_sp_brands as exported by Sellerise
+acos_sp_video,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Video,float64,never blank; 0 on a day without a Sellerise row,Sponsored Video part of acos_sp_video as exported by Sellerise
+ad_sales_sp_display,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Display,float64,never blank; 0 on a day without a Sellerise row,Sponsored Display part of ad_sales_sp_display as exported by Sellerise
+ad_sales_sp_brands,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Brands,float64,never blank; 0 on a day without a Sellerise row,Sponsored Brands part of ad_sales_sp_brands as exported by Sellerise
+ad_sales_sp_video,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Video,float64,never blank; 0 on a day without a Sellerise row,Sponsored Video part of ad_sales_sp_video as exported by Sellerise
+impressions,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Impressions,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Impressions' as exported
+impressions_sp_display,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Display,float64,never blank; 0 on a day without a Sellerise row,Sponsored Display part of impressions_sp_display as exported by Sellerise
+impressions_sp_brands,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Brands,float64,never blank; 0 on a day without a Sellerise row,Sponsored Brands part of impressions_sp_brands as exported by Sellerise
+impressions_sp_video,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Video,float64,never blank; 0 on a day without a Sellerise row,Sponsored Video part of impressions_sp_video as exported by Sellerise
+ctr,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,CTR,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'CTR' as exported
+ctr_sp_products,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Products,float64,never blank; 0 on a day without a Sellerise row,Sponsored Products part of ctr_sp_products as exported by Sellerise
+ctr_sp_display,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Display,float64,never blank; 0 on a day without a Sellerise row,Sponsored Display part of ctr_sp_display as exported by Sellerise
+ctr_sp_brands,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Brands,float64,never blank; 0 on a day without a Sellerise row,Sponsored Brands part of ctr_sp_brands as exported by Sellerise
+ctr_sp_video,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,<- Sp. Video,float64,never blank; 0 on a day without a Sellerise row,Sponsored Video part of ctr_sp_video as exported by Sellerise
+sales_per_unit,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Sales / Unit,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Sales / Unit' as exported
+net_profit_per_unit,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Net profit / Unit,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Net profit / Unit' as exported
+refund_per_unit,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Refund / Unit,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Refund / Unit' as exported
+ad_cost_per_unit,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Ad. Cost / Unit,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Ad. Cost / Unit' as exported
+ad_sales_per_unit,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Ad. Sales / Unit,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Ad. Sales / Unit' as exported
+prod_sales_per_order,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Prod. sales / Order,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Prod. sales / Order' as exported
+prod_sales_per_unit,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Prod. sales / Unit,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Prod. sales / Unit' as exported
+storage_fees,Sellerise sales + ads store (same store daily_facts is built from); not used by the forecasting table,Storage fees,float64,never blank; 0 on a day without a Sellerise row,Sellerise 'Storage fees' as exported

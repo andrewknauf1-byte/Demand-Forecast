@@ -1,34 +1,60 @@
 {
   "title": "Machine Learning Test - Actual Data - Daily - Amazon - Sellerise",
-  "built": "2026-11-19 17:52",
+  "built": "2026-11-19 20:50",
+  "same_data_as": "forecasting table daily_facts_d2026.11.12.parquet (every forecasting column identical, row for row; table re-derived from its sources at build)",
   "data_from": "2024-01-01",
   "data_through": "2026-11-11",
   "asin_day": {
     "file": "ml_test_actual_data_daily_amazon_sellerise_asin_day.parquet",
     "rows": 362962,
-    "columns": 109,
+    "columns": 138,
+    "forecasting_columns": 72,
+    "added_sellerise_columns": 58,
     "asins": 347,
     "days": 1046,
-    "filled_rows": 1470,
-    "inventory_unobserved_rows": 1966,
     "units_total": 1931285,
-    "sha256": "4bbc8b01c36a65d285e9072322e6560ec6181438bc0f8a7711b72d50a4344671"
+    "units_adj_total": 2009395,
+    "units_fba_total": 1862403,
+    "units_fbm_total": 68678,
+    "days_without_sellerise_row": 1470,
+    "inventory_unobserved_rows": 1966,
+    "outage_days": 42614,
+    "blank_counts": {
+      "asp": 88942,
+      "conversion": 79112,
+      "organic_conversion": 89118,
+      "ppc_conversion_sp": 226294,
+      "cpc_sp": 226294,
+      "efficiency_sp": 226317,
+      "tacos_sp": 89150,
+      "acos_sp": 308207,
+      "available": 1966,
+      "total_stock": 1966,
+      "reserved": 1966,
+      "inbound": 1966,
+      "inbound_shipped": 1966,
+      "inbound_receiving": 1966,
+      "unfulfillable": 1966,
+      "spell_id": 320348,
+      "day_of_spell": 320348,
+      "expected_fba_B": 324932,
+      "fbm_base": 324408
+    },
+    "sha256": "7548fcb060cd846e08507024da99c3e44cfb9ab9487cf057f6ec84165f807ec0"
   },
   "sku_day": {
     "file": "ml_test_actual_data_daily_amazon_sellerise_sku_day.parquet",
     "rows": 759396,
     "columns": 87,
     "skus": 726,
-    "filled_rows": 213216,
     "units_total": 1931081,
     "units_gap_vs_asin_day": -204,
-    "sha256": "2bdb9ec62125788ca2ff92a4db6e381bb31594b1b462917724308820129789fd"
+    "sha256": "86e2dc2d129af27e0404f52699d9d4a89f8248ba1ad9651443c747ddb2560a93"
   },
   "inputs": [
+    "daily_facts_d2026.11.12.parquet",
     "sales_daily_asin_d2026.11.12.parquet",
     "sales_daily_sku_d2026.11.12.parquet",
-    "daily_facts_d2026.11.12.parquet",
-    "inv_daily.csv",
     "dim_product.csv"
   ]
 }
